@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 自动扫描 -->
+    <context:component-scan base-package="edu.tstc.yy">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--解析dataConnection.properties-->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:dataConnection.properties" />
+    </bean>
+
+    <!--配置datasource-->
+    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${driverName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${userName}"/>
+        <property name="password" value="${passWord}"/>
+    </bean>
+    <!--配置SqlSessionFactionBean-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="datasource"/>
+        <property name="configLocation" value="classpath:mybatis_config.xml"/>
+    </bean>
+
+    <!--配置Mapper扫描器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="edu.tstc.yy.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+    </bean>
+
+
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"/>
+
+    </bean>
+
+    <context:annotation-config />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--注册方法验证的后处理器-->
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
+
+
+</beans>

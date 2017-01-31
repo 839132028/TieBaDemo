@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.tstc.yy.dao.CommentDao" >
+
+    <insert id="insertComment">
+        INSERT INTO commenttable(articleId, userID, commentDetails, isCommentDisplay)
+        VALUES (#{article.articleId},#{user.userId},#{commentDetails},#{isCommentDisplay})
+    </insert>
+
+    <select id="moreComment" resultMap="getMoreComment">
+        SELECT * FROM commenttable WHERE articleId=#{article.articleId} and isCommentDisplay=1 order by commentCreatTime
+        limit #{startIndex},#{limitNum}
+    </select>
+
+    <resultMap id="getMoreComment" type="Comment">
+        <id column="commentId" property="commentId"/>
+        <result column="commentDetails" property="commentDetails"/>
+        <result column="isCommentDisplay" property="isCommentDisplay"/>
+        <result column="commentCreatTime" property="commentCreatTime"/>
+        <association property="user" column="userId" select="edu.tstc.yy.dao.UserDao.findUserById"/>
+    </resultMap>
+
+    <update id="deleteComment">
+        UPDATE commenttable SET isCommentDisplay=0 WHERE commentId=#{commentId}
+    </update>
+
+
+    <select id="findIDsByComment" resultMap="getUsersByComment">
+        SELECT commentId,userID,articleId FROM commenttable WHERE commentId=#{commentId}
+    </select>
+    <resultMap id="getUsersByComment" type="Comment">
+        <id property="commentId" column="commentId"/>
+        <association property="user" column="userId" select="edu.tstc.yy.dao.UserDao.findUserById"/>
+        <association property="article.user.userId" column="articleId" select="edu.tstc.yy.dao.ArticleDao.findUserIdByArticle" javaType="Article">
+            <id column="userId" property="user.userId"/>
+        </association>
+    </resultMap>
+
+    <select id="findUserByCommentId" resultType="java.lang.Integer">
+        SELECT userId FROM commenttable WHERE commentId=#{commentId}
+    </select>
+
+    <update id="editComment">
+        UPDATE commenttable SET commentDetails=#{newComment.commentDetails},commentCreatTime=now() where commentId=#{oldComment.commentId}
+    </update>
+
+</mapper>

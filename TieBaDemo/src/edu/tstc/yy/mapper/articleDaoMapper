@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.tstc.yy.dao.ArticleDao" >
+
+    <insert id="insertArticle" parameterType="Article">
+
+        INSERT INTO articletable( articleHeadline, articleDetails, userId, isArticleDisplay,articleImageNum,imageUrls)
+                VALUES (#{articleHeadline},#{articleDetails},#{user.userId},#{isArticleDisplay},#{articleImageNum},#{imageUrls})
+    </insert>
+
+    <select id="selectArticle" resultMap="getArticle">
+        SELECT * FROM school_tieba.articletable where isArticleDisplay=1 order by articleCreatTime DESC limit #{startIndex},#{limitNum};
+    </select>
+
+    <select id="selectNextPageArticle" resultMap="getArticle">
+        SELECT * FROM articletable WHERE isArticleDisplay=1 AND articleId
+            <![CDATA[
+        < #{articleId}
+        ]]> and articleCreatTime
+             <![CDATA[
+                < #{articleCreatTime}
+        ]]>
+        ORDER BY articleId DESC limit #{limitNum}
+    </select>
+
+
+    <resultMap id="getArticle" type="Article">
+        <id column="articleId" property="articleId"/>
+        <result column="articleHeadline" property="articleHeadline"/>
+        <result column="articleDetails" property="articleDetails"/>
+        <result column="articleCreatTime" property="articleCreatTime"/>
+        <result column="isArticleDisplay" property="isArticleDisplay"/>
+        <result column="articleImageNum" property="articleImageNum"/>
+        <result column="imageUrls" property="imageUrls" />
+        <association property="user" column="userId" select="edu.tstc.yy.dao.UserDao.findUserById" >
+        </association>
+    </resultMap>
+
+    <update id="deleteArticle">
+        UPDATE articletable SET isArticleDisplay=0 WHERE articleId=#{articleId}
+    </update>
+
+
+    <select id="selectArticleByUserId" resultMap="getArticle">
+        SELECT * FROM articletable WHERE userId=#{user.userId} ORDER BY articleId DESC limit #{limitNum}
+    </select>
+    <select id="findUserIdByArticle" resultType="java.lang.Integer">
+        SELECT userId FROM usertable WHERE
+            userId=(SELECT userId FROM articletable WHERE articleId=#{articleId})
+    </select>
+    <select id="articleDetail" resultMap="getArticleDetail">
+        select
+            a.articleId as articleId ,
+            a.articleHeadline as articleHeadline,
+            a.articleDetails as articleDetails,
+            a.articleCreatTime as articleCreatTime,
+            a.isArticleDisplay as isArticleDisplay,
+            a.articleImageNum AS articleImageNum,
+            a.imageUrls as imageUrls,
+            a.userId as aUserId,
+            c.commentId as commentId,
+            c.commentDetails as commentDetails,
+            c.commentCreatTime as commentCreatTime,
+            c.isCommentDisplay as isCommentDisplay,
+            c.userId as cUserId
+        from articletable a,commenttable c where a.articleId=c.articleId and a.articleId=#{article.articleId} and a.isArticleDisplay=1 and c.isCommentDisplay=1
+        order by c.commentCreatTime limit #{startIndex},#{limitNum}
+    </select>
+
+
+    <resultMap id="getArticleDetail" type="Article">
+        <id column="articleId" property="articleId"/>
+        <result column="articleCreatTime" property="articleCreatTime"/>
+        <result column="articleDetails" property="articleDetails"/>
+        <result column="articleHeadline" property="articleHeadline"/>
+        <result column="isArticleDisplay" property="isArticleDisplay"/>
+        <result column="articleImageNum" property="articleImageNum"/>
+        <result column="imageUrls" property="imageUrls" />
+        <association property="user" column="aUserId" select="edu.tstc.yy.dao.UserDao.findUserById"/>
+        <collection property="comments" ofType="Comment">
+            <id column="commentId" property="commentId"/>
+            <result column="commentDetails" property="commentDetails"/>
+            <result column="commentCreatTime" property="commentCreatTime"/>
+            <result column="isCommentDisplay" property="isCommentDisplay"/>
+            <association property="user" column="cUserId" select="edu.tstc.yy.dao.UserDao.findUserById"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectArticleByArticleId" resultMap="getArticle">
+        SELECT * FROM articletable WHERE articleId=#{articleId} and isArticleDisplay=1
+    </select>
+    <select id="selectMoreActicleByUserId" resultType="edu.tstc.yy.model.Article" resultMap="getArticle">
+        SELECT * FROM articletable WHERE userId=#{user.userId} and articleId
+            <![CDATA[
+        < #{article.articleId}
+        ]]> ORDER BY articleId DESC limit #{limitNum}
+    </select>
+
+
+    <update id="editArticle">
+        UPDATE articletable SET articleDetails=#{newArticle.articleDetails},articleCreatTime=now() where articleId=#{oldArticle.articleId}
+    </update>
+
+
+
+
+
+
+</mapper>

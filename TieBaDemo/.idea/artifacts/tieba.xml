@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="tieba">
+    <output-path>$PROJECT_DIR$/out/artifacts/tieba</output-path>
+    <root id="archive" name="tieba.war">
+      <element id="artifact" artifact-name="TieBaDemo:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="PushJavaSDK" />
+          <element id="library" level="project" name="commons-io:commons-io:2.0.1" />
+          <element id="library" level="project" name="commons-fileupload:commons-fileupload:1.2.2" />
+          <element id="library" level="application" name="jsp-api" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

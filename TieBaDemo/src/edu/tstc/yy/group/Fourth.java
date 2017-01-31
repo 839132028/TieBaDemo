@@ -1,0 +1,7 @@
+package edu.tstc.yy.group;
+
+/**
+ * Created by w_2 on 2016-10-21.
+ */
+public interface Fourth {
+}

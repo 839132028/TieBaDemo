@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jackson">
+    <CLASSES>
+      <root url="file://G:/Java第三方JAR/JSON(本目录下任意文件夹都可独立使用)/jackson" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://G:/Java第三方JAR/JSON(本目录下任意文件夹都可独立使用)/jackson" recursive="false" />
+  </library>
+</component>

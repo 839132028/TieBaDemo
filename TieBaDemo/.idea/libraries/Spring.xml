@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="Spring" type="spring">
+    <CLASSES>
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/aopalliance-1.0.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/commons-logging-1.2.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-aop-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-aspects-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-beans-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-context-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-context-support-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-core-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-expression-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-instrument-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-instrument-tomcat-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-jdbc-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-jms-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-messaging-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-orm-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-oxm-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-test-4.3.1.RELEASE.jar!/" />
+      <root url="jar://G:/Java第三方JAR/spring依赖/spring/spring-tx-4.3.1.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/spring-context-4.3.1.RELEASE-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.ideaLibSources/spring-beans-4.3.1.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

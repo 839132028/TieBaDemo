@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.tstc.yy.dao.UserDao" >
+    <insert id="addUser" parameterType="User">
+        INSERT INTO usertable(userName, passWord, nickName, userIcon, userRoleId)
+        VALUES (#{userName},#{passWord,jdbcType=VARCHAR},#{nickName},#{userIcon},#{userRoleId})
+    </insert>
+
+
+    <select id="isSameName" resultType="Boolean" parameterType="String" >
+       SELECT userName,nickName FROM usertable
+        <if test= 'whatName=="userName" '>WHERE userName= #{name}</if>
+        <if test=' whatName=="nickName" '>WHERE nickName= #{name}</if>
+    </select>
+
+    <select id="userLoginDao" resultType="User">
+        SELECT userId,userName,nickName,userIcon,userCreatTime,userRoleId
+        FROM usertable WHERE userName=#{userName} and passWord=#{passWord}
+    </select>
+
+    <select id="isPassWordRight" resultType="java.lang.Integer">
+        SELECT count(*) FROM usertable WHERE userName=#{userName} and passWord=#{passWord}
+    </select>
+
+    <update id="alterPassWord">
+        UPDATE usertable SET passWord= #{newPassWord} where userName=#{user.userName} and passWord=#{user.passWord}
+    </update>
+
+    <select id="findUserById" parameterType="int" resultType="User">
+        SELECT userId,userName,nickName,userIcon,userCreatTime,userRoleId
+        FROM usertable WHERE userId=#{userId}
+    </select>
+    <select id="getdAdminRole" resultType="java.lang.Integer">
+        SELECT userRoleId FROM usertable WHERE userId=#{userId}
+    </select>
+    <select id="getUserToken" resultType="java.lang.String">
+        SELECT userToken FROM usertable WHERE userName=#{userName}
+    </select>
+
+    <insert id="insertUserToken">
+        UPDATE usertable SET userToken=#{userToken} where userName=#{userName}
+    </insert>
+
+</mapper>
